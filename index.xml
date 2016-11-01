@@ -6,7 +6,7 @@
 <title>Lubuntu Setup</title>
 <date>2016-11-01</date>
 </info>
-<chapter xml:id="_launcher">
+<chapter xml:id="launcher">
 <title>Launcher</title>
 <orderedlist numeration="arabic">
 <listitem>
@@ -20,7 +20,7 @@
 </listitem>
 </orderedlist>
 </chapter>
-<chapter id="_terminals">
+<chapter id="terminals">
 <title>Terminals</title>
 <orderedlist numeration="arabic">
 <listitem>
@@ -34,7 +34,7 @@
 </listitem>
 </orderedlist>
 </chapter>
-<chapter id="_ruby">
+<chapter id="ruby">
 <title>Ruby</title>
 <orderedlist numeration="arabic">
 <listitem>
@@ -48,7 +48,7 @@
 </listitem>
 </orderedlist>
 </chapter>
-<chapter id="_nodejs">
+<chapter id="nodejs">
 <title>NodeJS</title>
 <orderedlist numeration="arabic">
 <listitem>
@@ -62,7 +62,7 @@
 </listitem>
 </orderedlist>
 </chapter>
-<chapter xml:id="_editors_and_tmux">
+<chapter xml:id="editors_and_tmux">
 <title>Editors and Tmux</title>
 <orderedlist numeration="arabic">
 <listitem>
@@ -88,7 +88,7 @@
 </listitem>
 </orderedlist>
 </chapter>
-<chapter xml:id="_music">
+<chapter xml:id="music">
 <title>Music</title>
 <orderedlist numeration="arabic">
 <listitem>
@@ -112,7 +112,7 @@ gnome-do</simpara>
 </listitem>
 </orderedlist>
 </chapter>
-<chapter xml:id="_cloud_storage">
+<chapter xml:id="cloud_storage">
 <title>Cloud Storage</title>
 <orderedlist numeration="arabic">
 <listitem>
