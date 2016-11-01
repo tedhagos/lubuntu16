@@ -1,5 +1,5 @@
 :stylesheet: style.css
-:docstyle: book
+:doctype: book
 
 = Lubuntu Setup
 

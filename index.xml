@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?asciidoc-toc?>
 <?asciidoc-numbered?>
-<article xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
+<book xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
 <info>
 <title>Lubuntu Setup</title>
 <date>2016-11-01</date>
 </info>
-<section xml:id="_launcher">
+<chapter xml:id="_launcher">
 <title>Launcher</title>
 <orderedlist numeration="arabic">
 <listitem>
@@ -19,8 +19,8 @@
 <simpara>Make sure the superkey + space is the hotkey</simpara>
 </listitem>
 </orderedlist>
-</section>
-<section xml:id="_terminals">
+</chapter>
+<chapter id="_terminals">
 <title>Terminals</title>
 <orderedlist numeration="arabic">
 <listitem>
@@ -33,8 +33,8 @@
 <simpara>configure as login shell</simpara>
 </listitem>
 </orderedlist>
-</section>
-<section xml:id="_ruby">
+</chapter>
+<chapter id="_ruby">
 <title>Ruby</title>
 <orderedlist numeration="arabic">
 <listitem>
@@ -47,8 +47,8 @@
 <simpara><literal>gem install asciidoctor</literal></simpara>
 </listitem>
 </orderedlist>
-</section>
-<section xml:id="_nodejs">
+</chapter>
+<chapter id="_nodejs">
 <title>NodeJS</title>
 <orderedlist numeration="arabic">
 <listitem>
@@ -61,8 +61,8 @@
 <simpara><literal>npm -g install nodemon</literal></simpara>
 </listitem>
 </orderedlist>
-</section>
-<section xml:id="_editors_and_tmux">
+</chapter>
+<chapter xml:id="_editors_and_tmux">
 <title>Editors and Tmux</title>
 <orderedlist numeration="arabic">
 <listitem>
@@ -87,8 +87,8 @@
 <simpara>configure terminals to use inconsolata</simpara>
 </listitem>
 </orderedlist>
-</section>
-<section xml:id="_music">
+</chapter>
+<chapter xml:id="_music">
 <title>Music</title>
 <orderedlist numeration="arabic">
 <listitem>
@@ -111,8 +111,8 @@ gnome-do</simpara>
 <simpara><literal>sudo apt-get install cmus</literal></simpara>
 </listitem>
 </orderedlist>
-</section>
-<section xml:id="_cloud_storage">
+</chapter>
+<chapter xml:id="_cloud_storage">
 <title>Cloud Storage</title>
 <orderedlist numeration="arabic">
 <listitem>
@@ -131,8 +131,8 @@ This is necessary because as of Yaketty, the dropbox daemon is
 broken, it doesn&#8217;t start automatically</simpara>
 </listitem>
 </orderedlist>
-</section>
-<section xml:id="_hp_printers">
+</chapter>
+<chapter xml:id="_hp_printers">
 <title>HP Printers</title>
 <orderedlist numeration="arabic">
 <listitem>
@@ -145,5 +145,5 @@ broken, it doesn&#8217;t start automatically</simpara>
 <simpara>Launch gnome-do, search "HPLip toolbox"</simpara>
 </listitem>
 </orderedlist>
-</section>
-</article>
+</chapter>
+</book>
