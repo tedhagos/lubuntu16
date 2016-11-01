@@ -23,6 +23,13 @@ dd {
 .admonitionblock>table td.icon{text-align:center;width:80px}
 .admonitionblock>table td.icon img{max-width:none}
 
+#header > h1 {
+  color: #580000;
+  margin-bottom: 2em;
+  text-align:center
+    
+}
+
 h1 {text-align: left; font-weight:normal; font-size: 2.5em;}
 h2 {text-align: left; font-family:serif; font-weight:normal; font-size: 2em;}
 

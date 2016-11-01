@@ -59,4 +59,14 @@
    broken, it doesn't start automatically
 
 
+== HP Printers
+
+1. `sudo apt-get install hplip hplip-gui`
+2. Use the HPLip toolbox to setup the printers
+3. Launch gnome-do, search "HPLip toolbox"
+
+
+
+
+
 
