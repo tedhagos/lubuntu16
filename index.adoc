@@ -3,6 +3,12 @@
 
 = Lubuntu Setup
 
+== Launcher
+
+1. `sudo apt-get install gnome-do`
+2. Configure gnome-do to start with the OS
+3. Make sure the superkey + space is the hotkey
+
 == Terminals
 
 1. `sudo apt-get install guake terminator`
@@ -34,7 +40,13 @@
 
 == Music
 
-`sudo apt-get install cmus`
+1. Replace the default sound server
+2. `sudo add-apt-repository ppa:nilarimogard/webupd8`
+3. `sudo apt-get update`
+4. `sudo apt-get install pulseaudio-equalizer`
+5. Change the settings of the equalizer, search "equalizer" in
+   gnome-do
+6. `sudo apt-get install cmus`
 
 == Cloud Storage 
 
