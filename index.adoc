@@ -1,0 +1,50 @@
+:stylesheet: style.css
+:docstyle: book
+
+= Lubuntu Setup
+
+== Terminals
+
+1. `sudo apt-get install guake terminator`
+2. remap the keybindings
+3. configure as login shell
+
+
+== Ruby
+
+1. Install rvm
+2. `rvm install 2.1.3`
+3. `gem install asciidoctor`
+
+== NodeJS
+
+1. Intall nvm
+2. `nvm install 6.3.1`
+3. `npm -g install nodemon`
+
+== Editors and Tmux
+
+1. `sudo apt-get install vim-nox tmux emacs git`
+2. `mkdir workarea && cd workarea` 
+3. `git clone https://github.com/tedhagos/configs.git`
+4. `cd ~ && cp ~/workarea/vimrc .vimrc`
+5. `cp ~/workarea/tmux.conf .tmux.conf`
+6. `sudo apt-get install fonts-inconsolata`
+7. configure terminals to use inconsolata
+
+== Music
+
+`sudo apt-get install cmus`
+
+== Cloud Storage 
+
+1. Get overgrive, setup with your Google account
+2. Download Dropbox, then `sudo dropbox start -i`
+3. Wait for a (long) while, when dropbox finishes downloading the
+   installer, sync Dropbox
+4. Everytime you reboot, start dropbox manually `sudo dropbox start`.
+   This is necessary because as of Yaketty, the dropbox daemon is
+   broken, it doesn't start automatically
+
+
+

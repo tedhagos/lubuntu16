@@ -1,0 +1,3 @@
+Created new window in existing browser session.
+[5737:5737:1101/192657:ERROR:sandbox_linux.cc(343)] InitializeSandbox() called with multiple threads in process gpu-process. 
+[5737:5737:1101/192657:ERROR:broker_posix.cc(41)] Invalid node channel message
