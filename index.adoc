@@ -12,17 +12,67 @@
 == Terminals
 
 1. `sudo apt-get install guake terminator`
-2. remap the keybindings
-3. configure as login shell
+2. `sudo apt-get install terminator`
+3. remap the keybindings
+4. configure as login shell
+
+
+== Java
+
+To install the oracle JVM and JDK, add webupd8team repository and pull
+the specifict JDK version from the repo
+
+----
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-java8-installer
+sudo update-alternatives --config java
+----
+
+If you need JDK 7;
+
+`sudo apt-get install oracle-java7-installer`
+
+then switch your JDK using 
+
+`sudo update-alternatives --config java`
 
 
 == Ruby
 
-1. Install rvm
-2. `rvm install 2.1.3`
-3. `gem install asciidoctor`
+Install the Ruby Version Manager (rvm), then install your specific
+version of ruby
+
+----
+curl -sSL https://get.rvm.io | bash
+rvm install 2.1.3
+rvm create alias 2.1.3 # make this version the default
+gem install asciidoctor # for writing
+gem install jekyll # for static website
+gem install pygments.rb
+----
+
+
+== Python
+
+----
+sudo apt-get install python-setuptools
+sudo easy_install pip
+sudo pip pygments 
+----
 
 == NodeJS
+
+----
+curl -o-
+https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh |
+bash
+nvm install 6.3.1
+
+npm install -g nodemon
+npm install -g http-server
+----
+
 
 1. Intall nvm
 2. `nvm install 6.3.1`
@@ -64,6 +114,66 @@
 1. `sudo apt-get install hplip hplip-gui`
 2. Use the HPLip toolbox to setup the printers
 3. Launch gnome-do, search "HPLip toolbox"
+
+
+== nvPY
+
+----
+sudo apt-get install nvpy
+----
+
+Create a config file for nvpy
+
+----
+sudo touch ~/.nvpy.cfg
+----
+
+Create the nvpy configuration file on your home folder
+
+.nvpy.cfg
+-----
+[nvpy]
+notes_as_txt = 1
+txt_path = /home/thagos/Dropbox/notes
+
+#disable simplenote syncing, use 1 to enable it
+simplenote_sync = 0
+
+# 0 value will sort in alphanumeric mode
+sort_mode = 1
+----
+
+== Ripping tools
+
+*Youtube*
+
+----
+sudo apt-get install youtube-dl
+youtube-dl <youtue URL>
+----
+
+*Download accelerator*
+
+----
+sudo apt-get install axel
+axel -n 10 <URL>
+----
+
+== Writing toolchain
+
+----
+rvm use 2.1.3 # or any other ruby version you are using
+gem install asciidoctor
+----
+
+*DocBook*
+
+----
+sudo apt-get install xsltproc docbook-xsl-ns docbook5-xml
+----
+
+
+
 
 
 
