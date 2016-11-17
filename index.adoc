@@ -23,7 +23,7 @@ Alternatively, you can install _Gnome-Do_
 == Java
 
 To install the oracle JVM and JDK, add webupd8team repository and pull
-the specifict JDK version from the repo
+the specific JDK version from the repo
 
 ----
 sudo add-apt-repository ppa:webupd8team/java
