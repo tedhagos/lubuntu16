@@ -1,0 +1,47 @@
+== Package Manager
+
+
+When you are using a supported version of Ubuntu, you usually won't
+have mess around package management settings. Just follow the GUI
+wizards when the software updater prompts you for updates. 
+
+=== Updating on the command line
+
+
+====
+....
+sudo apt-get update # <1>
+sudo apt-get upgrade # <2>
+sudo apt-get dist-upgrade # <3>
+....
+====
+<1> Fetches the list of available updates
+<2> Strictly upgrades the current packages 
+<3> Installs updates, the new ones
+
+=== Updating an old unsupported version
+
+Ubuntu versions or releases are supported for 9 months. The LTS (Long
+Term Support) are supported up to 5 years. Once the support time
+horizon is up, the repos for the old Ubuntu release is moved somewhere
+else. That is why if you do the `sudo apt-get update`, you get the
+*404* error. The repos are no longer there. This is the situation
+where you need to edit the `/etc/apt/sources.list` file.
+
+1. Edit the source.list file, `sudo vim /etc/apt/sources.list`
+2. replace all occurences of the string `xx.archive.ubuntu.com` with
+   `old-releases.ubuntu.com`
+3. Find the line that reads `deb http://archive.ubuntu.com/ubuntu main
+   universe restricted multiverse`, comment it out
+4. Run `sudo apt-get update && sudo apt-get upgrade`
+
+=== Upgrading to a new release
+
+....
+sudo apt-get install update-manager-core
+sudo do-release-upgrade
+....
+
+You will wait for a long time, it could take hours
+
+

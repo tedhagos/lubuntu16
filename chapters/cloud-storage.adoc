@@ -1,0 +1,45 @@
+== Cloud Storage
+
+
+=== Dropbox
+
+Head over to
+https://www.dropbox.com/install[https://www.dropbox.com/install], get
+the right installer for your platform. There are instructions on how
+to do the command line installation on that page, follow that.
+
+When the dropbox installer finishes downloading, install the .deb or
+whatever package you did download. Then start dropbox
+
+....
+dropbox start -i
+....
+
+As Ubuntu 16, Dropbox does not start automatically with the OS, so
+you have to start it manually every time you boot.
+
+....
+sudo dropbox start
+....
+
+=== Google Drive
+
+Get OverGrive at
+https://www.thefanclub.co.za/overgrive[https://www.thefanclub.co.za/overgrive],
+you need to pay for it. It is worth it, just fork it out. Download the
+the installer for Ubuntu and install either using dpkg or just double
+click the DEB file. 
+
+Launch it however you like it, either using gnome-do or just `ALT-F2`,
+type _overgrive_, it should appear on the system tray. 
+
+Once you see the OverGrive icon on the tray, configure it using its
+Preferences menu. You should be able to sync it with your Google
+Drive account. 
+
+WARNING: When you buy the OverGrive license, it will ask for your
+email address, make sure that this email address is the account you
+want to sync in Google Drive. The license is tied to the email address
+you use at the time of purchase
+
+

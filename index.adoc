@@ -5,6 +5,10 @@
 
 == Launcher
 
+
+The simplest is to use `ALT-F2`, then type name of the application.
+Alternatively, you can install _Gnome-Do_
+
 1. `sudo apt-get install gnome-do`
 2. Configure gnome-do to start with the OS
 3. Make sure the superkey + space is the hotkey
@@ -15,7 +19,6 @@
 2. `sudo apt-get install terminator`
 3. remap the keybindings
 4. configure as login shell
-
 
 == Java
 
@@ -55,38 +58,111 @@ gem install pygments.rb
 
 == Python
 
-----
+.The most basic way to install Python
+====
+....
 sudo apt-get install python-setuptools
 sudo easy_install pip
 sudo pip pygments 
+....
+====
+
+Using the new Python notebooks requires a bit more software, there are
+many out there but we will use Jupyter, this is a popular software
+among Python enthusiast.
+
+1. Go to the Continuum website at
+   https://www.continuum.io/downloads[https://www.continuum.io/downloads]
+2. Download the Anaconda installer. At this point, you most likely
+   have the Python 2.x version, so choose that for the download
+3. Follow the instruction on the website on how to install Anaconda,
+   most likely, it simply be a bash command
++
 ----
+bash Anaconda2-4.2.0-Linux-x86_64.sh 
+----
+4. Install the Jupyter software using the command `conda install
+   jupyter`
+   
+To start using the interactive notebook, create a working directory
+and start the notebook from there
+
+.Starting a Python notebook
+====
+....
+mkdir pythontest && cd pythontest
+jupyter notebook
+....
+====
+
+It will start a webserver and quite possibly, launch your default
+browser as well. Then you can start mucking around the notebook
+
 
 == NodeJS
 
-----
+Install NVM first.
+
+....
 curl -o-
 https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh |
 bash
-nvm install 6.3.1
+....
 
+Then install a version of node
+
+....
+nvm install 6.3.1
+....
+
+Start getting some software via *npm*
+
+....
 npm install -g nodemon
 npm install -g http-server
-----
+....
 
+Perhaps, get another version of node
 
-1. Intall nvm
-2. `nvm install 6.3.1`
-3. `npm -g install nodemon`
+....
+nvm install 6.2.2
+....
 
 == Editors and Tmux
 
-1. `sudo apt-get install vim-nox tmux emacs git`
-2. `mkdir workarea && cd workarea` 
-3. `git clone https://github.com/tedhagos/configs.git`
-4. `cd ~ && cp ~/workarea/vimrc .vimrc`
-5. `cp ~/workarea/tmux.conf .tmux.conf`
-6. `sudo apt-get install fonts-inconsolata`
-7. configure terminals to use inconsolata
+
+Get vim, tmux, emacs and git
+
+....
+sudo apt-get install vim-nox tmux emacs git
+....
+
+Pull your configs and put them on a work area folder
+
+....
+mkdir workarea && cd workarea 
+git clone https://github.com/tedhagos/configs.git
+....
+
+I saved my vimrc, tmux.conf, bashrc and other stuff on a git repo,
+that's why I pulled the configs.git.
+
+Get the vimrc sorted out.
+....
+cd ~ && cp ~/workarea/vimrc .vimrc
+....
+
+Then get the tmux.conf sorted out
+....
+cp ~/workarea/tmux.conf .tmux.conf
+....
+
+Get some nice fonts for the terminal
+....
+sudo apt-get install fonts-inconsolata
+....
+
+And configure terminals to use _inconsolata_
 
 == Music
 
@@ -98,15 +174,8 @@ npm install -g http-server
    gnome-do
 6. `sudo apt-get install cmus`
 
-== Cloud Storage 
-
-1. Get overgrive, setup with your Google account
-2. Download Dropbox, then `sudo dropbox start -i`
-3. Wait for a (long) while, when dropbox finishes downloading the
-   installer, sync Dropbox
-4. Everytime you reboot, start dropbox manually `sudo dropbox start`.
-   This is necessary because as of Yaketty, the dropbox daemon is
-   broken, it doesn't start automatically
+// CLOUD STORAGE
+include::chapters/cloud-storage.adoc[]
 
 
 == HP Printers
@@ -131,7 +200,7 @@ sudo touch ~/.nvpy.cfg
 Create the nvpy configuration file on your home folder
 
 .nvpy.cfg
------
+....
 [nvpy]
 notes_as_txt = 1
 txt_path = /home/thagos/Dropbox/notes
@@ -141,7 +210,7 @@ simplenote_sync = 0
 
 # 0 value will sort in alphanumeric mode
 sort_mode = 1
-----
+....
 
 == Ripping tools
 
@@ -172,7 +241,8 @@ gem install asciidoctor
 sudo apt-get install xsltproc docbook-xsl-ns docbook5-xml
 ----
 
-
+// Package Management
+include::chapters/package-manager.adoc[]
 
 
 

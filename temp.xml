@@ -6,7 +6,7 @@
 <title>Lubuntu Setup</title>
 <date>2016-11-17</date>
 </info>
-<chapter xml:id="launcher">
+<chapter xml:id="_launcher">
 <title>Launcher</title>
 <simpara>The simplest is to use <literal>ALT-F2</literal>, then type name of the application.
 Alternatively, you can install <emphasis>Gnome-Do</emphasis></simpara>
@@ -22,7 +22,7 @@ Alternatively, you can install <emphasis>Gnome-Do</emphasis></simpara>
 </listitem>
 </orderedlist>
 </chapter>
-<chapter xml:id="terminals">
+<chapter xml:id="_terminals">
 <title>Terminals</title>
 <orderedlist numeration="arabic">
 <listitem>
@@ -39,7 +39,7 @@ Alternatively, you can install <emphasis>Gnome-Do</emphasis></simpara>
 </listitem>
 </orderedlist>
 </chapter>
-<chapter xml:id="java">
+<chapter xml:id="_java">
 <title>Java</title>
 <simpara>To install the oracle JVM and JDK, add webupd8team repository and pull
 the specifict JDK version from the repo</simpara>
@@ -52,7 +52,7 @@ sudo update-alternatives --config java</screen>
 <simpara>then switch your JDK using</simpara>
 <simpara><literal>sudo update-alternatives --config java</literal></simpara>
 </chapter>
-<chapter xml:id="ruby">
+<chapter xml:id="_ruby">
 <title>Ruby</title>
 <simpara>Install the Ruby Version Manager (rvm), then install your specific
 version of ruby</simpara>
@@ -63,7 +63,7 @@ gem install asciidoctor # for writing
 gem install jekyll # for static website
 gem install pygments.rb</screen>
 </chapter>
-<chapter xml:id="python">
+<chapter xml:id="_python">
 <title>Python</title>
 <example>
 <title>The most basic way to install Python</title>
@@ -103,7 +103,7 @@ jupyter notebook</literallayout>
 <simpara>It will start a webserver and quite possibly, launch your default
 browser as well. Then you can start mucking around the notebook</simpara>
 </chapter>
-<chapter xml:id="nodejs">
+<chapter xml:id="_nodejs">
 <title>NodeJS</title>
 <simpara>Install NVM first.</simpara>
 <literallayout class="monospaced">curl -o-
@@ -117,7 +117,7 @@ npm install -g http-server</literallayout>
 <simpara>Perhaps, get another version of node</simpara>
 <literallayout class="monospaced">nvm install 6.2.2</literallayout>
 </chapter>
-<chapter xml:id="editors_and_tmux">
+<chapter xml:id="_editors_and_tmux">
 <title>Editors and Tmux</title>
 <simpara>Get vim, tmux, emacs and git</simpara>
 <literallayout class="monospaced">sudo apt-get install vim-nox tmux emacs git</literallayout>
@@ -134,7 +134,7 @@ that&#8217;s why I pulled the configs.git.</simpara>
 <literallayout class="monospaced">sudo apt-get install fonts-inconsolata</literallayout>
 <simpara>And configure terminals to use <emphasis>inconsolata</emphasis></simpara>
 </chapter>
-<chapter xml:id="music">
+<chapter xml:id="_music">
 <title>Music</title>
 <orderedlist numeration="arabic">
 <listitem>
@@ -158,9 +158,9 @@ gnome-do</simpara>
 </listitem>
 </orderedlist>
 </chapter>
-<chapter xml:id="cloud_storage">
+<chapter xml:id="_cloud_storage">
 <title>Cloud Storage</title>
-<section xml:id="dropbox">
+<section xml:id="_dropbox">
 <title>Dropbox</title>
 <simpara>Head over to
 <link xl:href="https://www.dropbox.com/install">https://www.dropbox.com/install</link>, get
@@ -173,7 +173,7 @@ whatever package you did download. Then start dropbox</simpara>
 you have to start it manually every time you boot.</simpara>
 <literallayout class="monospaced">sudo dropbox start</literallayout>
 </section>
-<section xml:id="google_drive">
+<section xml:id="_google_drive">
 <title>Google Drive</title>
 <simpara>Get OverGrive at
 <link xl:href="https://www.thefanclub.co.za/overgrive">https://www.thefanclub.co.za/overgrive</link>,
@@ -193,7 +193,7 @@ you use at the time of purchase</simpara>
 </warning>
 </section>
 </chapter>
-<chapter xml:id="hp_printers">
+<chapter xml:id="_hp_printers">
 <title>HP Printers</title>
 <orderedlist numeration="arabic">
 <listitem>
@@ -207,7 +207,7 @@ you use at the time of purchase</simpara>
 </listitem>
 </orderedlist>
 </chapter>
-<chapter xml:id="nvpy">
+<chapter xml:id="_nvpy">
 <title>nvPY</title>
 <screen>sudo apt-get install nvpy</screen>
 <simpara>Create a config file for nvpy</simpara>
@@ -228,7 +228,7 @@ sort_mode = 1</literallayout>
 </para>
 </formalpara>
 </chapter>
-<chapter xml:id="ripping_tools">
+<chapter xml:id="_ripping_tools">
 <title>Ripping tools</title>
 <simpara><emphasis role="strong">Youtube</emphasis></simpara>
 <screen>sudo apt-get install youtube-dl
@@ -237,19 +237,19 @@ youtube-dl &lt;youtue URL&gt;</screen>
 <screen>sudo apt-get install axel
 axel -n 10 &lt;URL&gt;</screen>
 </chapter>
-<chapter xml:id="writing_toolchain">
+<chapter xml:id="_writing_toolchain">
 <title>Writing toolchain</title>
 <screen>rvm use 2.1.3 # or any other ruby version you are using
 gem install asciidoctor</screen>
 <simpara><emphasis role="strong">DocBook</emphasis></simpara>
 <screen>sudo apt-get install xsltproc docbook-xsl-ns docbook5-xml</screen>
 </chapter>
-<chapter xml:id="package_manager">
+<chapter xml:id="_package_manager">
 <title>Package Manager</title>
 <simpara>When you are using a supported version of Ubuntu, you usually won&#8217;t
 have mess around package management settings. Just follow the GUI
 wizards when the software updater prompts you for updates.</simpara>
-<section xml:id="updating_on_the_command_line">
+<section xml:id="_updating_on_the_command_line">
 <title>Updating on the command line</title>
 <informalexample>
 <literallayout class="monospaced">sudo apt-get update <co xml:id="CO1-1"/>
@@ -268,7 +268,7 @@ sudo apt-get dist-upgrade <co xml:id="CO1-3"/></literallayout>
 </callout>
 </calloutlist>
 </section>
-<section xml:id="updating_an_old_unsupported_version">
+<section xml:id="_updating_an_old_unsupported_version">
 <title>Updating an old unsupported version</title>
 <simpara>Ubuntu versions or releases are supported for 9 months. The LTS (Long
 Term Support) are supported up to 5 years. Once the support time
@@ -293,7 +293,7 @@ universe restricted multiverse</literal>, comment it out</simpara>
 </listitem>
 </orderedlist>
 </section>
-<section xml:id="upgrading_to_a_new_release">
+<section xml:id="_upgrading_to_a_new_release">
 <title>Upgrading to a new release</title>
 <literallayout class="monospaced">sudo apt-get install update-manager-core
 sudo do-release-upgrade</literallayout>
