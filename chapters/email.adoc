@@ -1,0 +1,266 @@
+== Email
+
+We will pull the email from Google. Google supports both IMAP and POP3
+client access, not that it matters to Google which one we will use.
+Even if we use POP3, Google will keep the messages on the server
+anyway. But we will use POP3 on the client. 
+
+Before we proceed any further, you need to enable POP3 access in your
+Google account. You need to do the following
+
+1. Login to your Google account
+2. Go to Settings
+3. Find the _"Forwarding and POP/IMAP"_
+4. Choose _Enable POP for all mail_
+5. Save the changes
+
+Now, we can proceed to setting up the client part. We need to get a
+couple of things.
+
+.Things we need
+====
+....
+sudo apt-get install fetchmail # <1>
+sudo apt-get install procmail # <2>
+sudo apt-get install msmtp # <3>
+sudo apt-get install mutt # <4>
+sudo apt-get install w3m # <5>
+....
+====
+<1> This will pull mail from Gmail or any other mail server. We can pull mail from more
+than one account, but we'll pull from just one for now
+
+<2> This can filter your emails, so you can put mails in different
+folders if you so wish to organize them
+
+<3> This allows us to compose email and send them using GMails SMTP
+
+<4> This is an email client, this is the part we interact with. We
+could simply use the built-in *mail* command that is present in most
+*NIX, but that is not user-friendly. There are other choices for email
+clients like PINE, but mutt is what I'm used to
+
+<5> A text-based web browser
+
+=== Fetchmail 
+
+
+
+.Checking if fetchmail has SSL support
+====
+----
+$ ldd `which fetchmail` | grep libssl 
+    libssl.so.1.0.0 => /lib/x86_64-linux-gnu/libssl.so.1.0.0 (0x00007fbd7e706000)
+----
+====
+You should see something like the one in line #2 of the listing
+above. 
+
+The next thing to check is we have the _ca-certificates_ installed on
+our system. This is necessary to pull mails from Google servers. Most
+modern Linux systems already have this installed. 
+If it isn't, you can always install it with the command `sudo apt-get install
+ca-certificates`. An easy way to check if you already have
+ca-certificates is to run the following command.
+
+.Check for ca-certificates
+====
+....
+$ dpkg -l | grep ca-certificates
+	ii ca-certificates
+	all Common CA certificates	2016010ubuntu
+	...  ...
+	...  ...
+....
+====
+
+If you saw an output similar to line 2 of the listing above, then you
+already have the ca-certificates. It should actually come with your
+installation. But if you don't have it, just get it via `sudo apt-get
+install ca-certificates`. 
+
+Now we can check if our fetchmail and certificates can successfully
+talk to Google servers
+
+.Checking if fetchmail+certificates can talk to Google Servers
+====
+----
+$ openssl s_client -connect pop.gmail.com:995
+...  ...
+...  ...
+...  ...
++OK Gpop ready for request from <your IP address> ...
+----
+====
+
+That last command above will actually spew a lot more info but we're
+only interested in the that last message that said "+OK Gpop ready..".
+That meant our certificates and fetchmail are working as expected. Now
+we can start configuring the fetchmailrc file. You will need to create
+it first with the command `touch ~/.fetchmailrc`. The listing below
+shows a basic fetchmailrc.
+
+.Fetchmail Configuration
+====
+----
+set postmaster 'ted' # <1>
+set daemon 600 # <2>
+
+poll "pop.gmail.com" with proto POP3 # <3> 
+  user 'youremail@gmail.com' there with password 'yourpassword' # <4> <5>
+  is ted here options ssl keep # <6> <7>
+  mda '/usr/bin/procmail -d %T' <8>
+----
+====
+<1> If for some reason, that fetchmail cannot deliver the email to the
+right inbox, we will send the mail to the spool file
+_/var/mail/ted_. If I omitted this line, whatever undelivered
+email will be placed in _/var/mail/postmaster_
+<2> We are _daemonizing_ the `fetchmail` program. We want it to run
+every 600 seconds. You can set it to to 300 seconds if you wish, but
+Google may penalize you for hitting the server that often. Do you
+really want to check your email every 10 minutes anyway? If you
+comment out this line, fetchmail won't run in the background. That
+means, you have to invoke it everytime you want to check for new email
+
+<3> We will check for _pop.gmail.com_ for emails that we haven't
+downloaded yet using the POP3 protocol
+
+<4> substitute your actual GMail address with to
+_youremail@gmail.com_
+
+<5> Substitute your actual GMail account password
+to _yourpassword_
+
+<6> `is` *ted* `here` means I am mapping the user named `ted` (in my
+Linux machine) to `youremail@gmail.com there`, who happens to be the
+remote user
+
+<7> `options ssl keep`. We'll use SSL to encrypt our communications,
+and we telling Google not to delete the emails on the server even
+after we have downloaded it
+
+<8> Finally, whatever emails we pull from the servers, we will pass
+them to `procmail` for filtering and further processing
+
+=== Procmail
+
+.Procmail configuration
+====
+....
+CORRECTHOME=/home/yourname/mail/in # <1>
+MAILDIR=$CORRECTHOME/ # <2>
+PMDIR=/home/yourname/mail/procmail/info/in # <3>
+LOGFILE=$PMDIR/log # <4>
+VERBOSE=on # <5>
+
+:0
+Mail/ # <6>
+....
+====
+<1> Path to where you would like the physical mail files to be stored.
+Substitute your actual username to _yourname_, if you're not sure what
+that is, run `whoami`
+
+<2> Were just setting the the MAILDIR variable
+
+<3> Were just creating a Procmail home folder and saving it to the
+PMDIR variable
+
+<4> Set the log file
+
+<5> Set this to on when you are testing, you can set this to off later
+on when things are properly configured already. This could be useful
+when debugging so you can see which systems are failing
+
+<6> Pay attention to the slash at the end of the Mail, that is
+important
+
+=== msmtp
+
+Msmtp is an smtp client. It will be the one responsible for sending
+out email messages. In order to use it, we first have to get it via
+`sudo apt-get install -y msmtp`.  
+
+test it
+
+Now 
+
+.Msmtp configuration
+====
+....
+defaults
+auth on
+tls on
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+
+account Gmail
+host smtp.gmail.com
+port 587
+from yourusername@gmail.com
+user yourusername@gmail.com
+password yourpassword
+
+account default: Gmail
+....
+====
+
+
+=== Mutt
+
+.Mutt configuration file
+====
+....
+set realname = "Your RealName"
+set from="yourusername@gmail.com"
+set use_from=yes
+set envelope_from="yes"
+
+set sendmail="/usr/bin/msmtp"
+set spoolfile="/var/spool/mail/yourLinuxuserName"
+
+set folder="$HOME/Mail"
+set record="+Sent"
+set postponed="+Drafts"
+set mbox_type=Maildir
+set spoolfile=~/Mail
+set move=no
+
+
+mailboxes ! +slrn +fetchmail +mutt
+
+set editor="vim -c 'set tw=70 et' '+/^$'"
+set edit_headers=yes
+
+set alias_file=~/mail/mutt_aliases
+source ~/mail/mutt_aliases
+set sort_alias=alias
+set sort_aux=last-date-received
+set sort_browser=reverse-date
+set sort=threads
+set sort_re
+
+set timeout=30 # So it refreshes after 30 seconds
+....
+====
+
+
+
+*There are other ways to do this*
+
+1. fetchmail + maildrop + mutt
+2. fetchmail + dovecot + mutt
+3. postfix + dovecot + procmail + mutt
+
+== References
+
+1. https://www.linode.com/docs/email/clients/using-fetchmail-to-retrieve-email
+2. https://www.df7cb.de/blog/2010.html
+3. http://www.ioncannon.net/system-administration/97/using-fetchmail-and-procmail-for-maildir-style-storage-from-a-pop3-account/
+4. https://www.axllent.org/docs/view/gmail-pop3-with-fetchmail/
+5. https://www.axllent.org/docs/view/gmail-pop3-with-fetchmail/
+6. http://www.andrews-corner.org/linux/mutt.html
+7. https://www.ucolick.org/~lharden/muttchart.html
+8.
+https://hostpresto.com/community/tutorials/how-to-send-email-from-the-command-line-with-msmtp-and-mutt/
+9. http://jasonwryan.com/blog/2012/05/12/mutt/

@@ -65,6 +65,10 @@ pre.programlisting {
   /*background: #f2f2f2;*/
 }
 
+.screen, .literallayout, .informal-example, .example-contents {
+  background: #f1f1f1;
+}
+
 h1, h2, h3, h4, h5 {
   font-family: 'Georgia', 'Times Roman', serif;
   font-weight: normal;
@@ -75,16 +79,24 @@ h1, h2, h3, h4, h5 {
   font-family: 'Georgia', 'Times Roman', serif;
   font-weight: normal !important;
   line-height: 2em;
-  font-size: 1.2em;
+  ifont-size: 1.2em;
 }
 
 .navheader, .navfooter {
   font-family: 'Helvetica Neueue', 'Helvetica', 'Arial', sans-serif;
-  background: #e7e7e7;
+  /* background: #e7e7e7; 
+  background: #fff7e4; */
   padding:5px;
 }
+.navheader  a, .navfooter a {
+  text-decoration:none;
+}
+.navheader  a:hover, .navfooter a:hover {
+  text-decoration:underline;
+}
 .navheader>hr, .navfooter>hr, .titlepage>hr {
-  border:0 solid #fff;
+  border:1px solid #cacaca;
+  border-style: solid;
 }
 
 .tip, .warning, .important, .information, .caution, .note {

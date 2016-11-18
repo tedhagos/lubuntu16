@@ -4,7 +4,7 @@
 <book xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
 <info>
 <title>Lubuntu Setup</title>
-<date>2016-11-17</date>
+<date>2016-11-18</date>
 </info>
 <chapter xml:id="_launcher">
 <title>Launcher</title>
@@ -42,7 +42,7 @@ Alternatively, you can install <emphasis>Gnome-Do</emphasis></simpara>
 <chapter xml:id="_java">
 <title>Java</title>
 <simpara>To install the oracle JVM and JDK, add webupd8team repository and pull
-the specifict JDK version from the repo</simpara>
+the specific JDK version from the repo</simpara>
 <screen>sudo add-apt-repository ppa:webupd8team/java
 sudo apt-get update
 sudo apt-get install oracle-java8-installer
@@ -167,11 +167,16 @@ gnome-do</simpara>
 the right installer for your platform. There are instructions on how
 to do the command line installation on that page, follow that.</simpara>
 <simpara>When the dropbox installer finishes downloading, install the .deb or
-whatever package you did download. Then start dropbox</simpara>
-<literallayout class="monospaced">dropbox start -i</literallayout>
+whatever package you did download. Then start dropbox with the command
+<literal>sudo dropbox start -i</literal></simpara>
+<note>
 <simpara>As Ubuntu 16, Dropbox does not start automatically with the OS, so
 you have to start it manually every time you boot.</simpara>
+</note>
+<example>
+<title>Start the Dropbox daemon manually</title>
 <literallayout class="monospaced">sudo dropbox start</literallayout>
+</example>
 </section>
 <section xml:id="_google_drive">
 <title>Google Drive</title>
@@ -209,9 +214,13 @@ you use at the time of purchase</simpara>
 </chapter>
 <chapter xml:id="_nvpy">
 <title>nvPY</title>
-<screen>sudo apt-get install nvpy</screen>
+<simpara>nvPY is a note-taking application. It&#8217;s a python-based equivalent of
+Notational Velocity (OSX). It was used by a lot of people to sync with
+SimpleNote, but it can be configured to read from a Dropbox directory
+(or any directory for that matter).</simpara>
+<literallayout class="monospaced">sudo apt-get install nvpy</literallayout>
 <simpara>Create a config file for nvpy</simpara>
-<screen>sudo touch ~/.nvpy.cfg</screen>
+<literallayout class="monospaced">sudo touch ~/.nvpy.cfg</literallayout>
 <simpara>Create the nvpy configuration file on your home folder</simpara>
 <formalpara>
 <title>nvpy.cfg</title>
@@ -299,5 +308,302 @@ universe restricted multiverse</literal>, comment it out</simpara>
 sudo do-release-upgrade</literallayout>
 <simpara>You will wait for a long time, it could take hours</simpara>
 </section>
+</chapter>
+<chapter xml:id="_email">
+<title>Email</title>
+<simpara>We will pull the email from Google. Google supports both IMAP and POP3
+client access, not that it matters to Google which one we will use.
+Even if we use POP3, Google will keep the messages on the server
+anyway. But we will use POP3 on the client.</simpara>
+<simpara>Before we proceed any further, you need to enable POP3 access in your
+Google account. You need to do the following</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>Login to your Google account</simpara>
+</listitem>
+<listitem>
+<simpara>Go to Settings</simpara>
+</listitem>
+<listitem>
+<simpara>Find the <emphasis>"Forwarding and POP/IMAP"</emphasis></simpara>
+</listitem>
+<listitem>
+<simpara>Choose <emphasis>Enable POP for all mail</emphasis></simpara>
+</listitem>
+<listitem>
+<simpara>Save the changes</simpara>
+</listitem>
+</orderedlist>
+<simpara>Now, we can proceed to setting up the client part. We need to get a
+couple of things.</simpara>
+<example>
+<title>Things we need</title>
+<literallayout class="monospaced">sudo apt-get install fetchmail <co xml:id="CO2-1"/>
+sudo apt-get install procmail <co xml:id="CO2-2"/>
+sudo apt-get install msmtp <co xml:id="CO2-3"/>
+sudo apt-get install mutt <co xml:id="CO2-4"/>
+sudo apt-get install w3m <co xml:id="CO2-5"/></literallayout>
+</example>
+<calloutlist>
+<callout arearefs="CO2-1">
+<para>This will pull mail from Gmail or any other mail server. We can pull mail from more
+than one account, but we&#8217;ll pull from just one for now</para>
+</callout>
+<callout arearefs="CO2-2">
+<para>This can filter your emails, so you can put mails in different
+folders if you so wish to organize them</para>
+</callout>
+<callout arearefs="CO2-3">
+<para>This allows us to compose email and send them using GMails SMTP</para>
+</callout>
+<callout arearefs="CO2-4">
+<para>This is an email client, this is the part we interact with. We
+could simply use the built-in <emphasis role="strong">mail</emphasis> command that is present in most
+*NIX, but that is not user-friendly. There are other choices for email
+clients like PINE, but mutt is what I&#8217;m used to</para>
+</callout>
+<callout arearefs="CO2-5">
+<para>A text-based web browser</para>
+</callout>
+</calloutlist>
+<section xml:id="_fetchmail">
+<title>Fetchmail</title>
+<example>
+<title>Checking if fetchmail has SSL support</title>
+<screen>$ ldd `which fetchmail` | grep libssl
+    libssl.so.1.0.0 =&gt; /lib/x86_64-linux-gnu/libssl.so.1.0.0 (0x00007fbd7e706000)</screen>
+</example>
+<simpara>You should see something like the one in line #2 of the listing
+above.</simpara>
+<simpara>The next thing to check is we have the <emphasis>ca-certificates</emphasis> installed on
+our system. This is necessary to pull mails from Google servers. Most
+modern Linux systems already have this installed.
+If it isn&#8217;t, you can always install it with the command <literal>sudo apt-get install
+ca-certificates</literal>. An easy way to check if you already have
+ca-certificates is to run the following command.</simpara>
+<example>
+<title>Check for ca-certificates</title>
+<literallayout class="monospaced">$ dpkg -l | grep ca-certificates
+	ii ca-certificates
+	all Common CA certificates	2016010ubuntu
+	...  ...
+	...  ...</literallayout>
+</example>
+<simpara>If you saw an output similar to line 2 of the listing above, then you
+already have the ca-certificates. It should actually come with your
+installation. But if you don&#8217;t have it, just get it via <literal>sudo apt-get
+install ca-certificates</literal>.</simpara>
+<simpara>Now we can check if our fetchmail and certificates can successfully
+talk to Google servers</simpara>
+<example>
+<title>Checking if fetchmail+certificates can talk to Google Servers</title>
+<screen>$ openssl s_client -connect pop.gmail.com:995
+...  ...
+...  ...
+...  ...
++OK Gpop ready for request from &lt;your IP address&gt; ...</screen>
+</example>
+<simpara>That last command above will actually spew a lot more info but we&#8217;re
+only interested in the that last message that said "+OK Gpop ready..".
+That meant our certificates and fetchmail are working as expected. Now
+we can start configuring the fetchmailrc file. You will need to create
+it first with the command <literal>touch ~/.fetchmailrc</literal>. The listing below
+shows a basic fetchmailrc.</simpara>
+<example>
+<title>Fetchmail Configuration</title>
+<screen>set postmaster 'ted' <co xml:id="CO3-1"/>
+set daemon 600 <co xml:id="CO3-2"/>
+
+poll "pop.gmail.com" with proto POP3 <co xml:id="CO3-3"/>
+  user 'youremail@gmail.com' there with password 'yourpassword' <co xml:id="CO3-4"/> <co xml:id="CO3-5"/>
+  is ted here options ssl keep <co xml:id="CO3-6"/> <co xml:id="CO3-7"/>
+  mda '/usr/bin/procmail -d %T' <co xml:id="CO3-8"/></screen>
+</example>
+<calloutlist>
+<callout arearefs="CO3-1">
+<para>If for some reason, that fetchmail cannot deliver the email to the
+right inbox, we will send the mail to the spool file
+<emphasis>/var/mail/ted</emphasis>. If I omitted this line, whatever undelivered
+email will be placed in <emphasis>/var/mail/postmaster</emphasis></para>
+</callout>
+<callout arearefs="CO3-2">
+<para>We are <emphasis>daemonizing</emphasis> the <literal>fetchmail</literal> program. We want it to run
+every 600 seconds. You can set it to to 300 seconds if you wish, but
+Google may penalize you for hitting the server that often. Do you
+really want to check your email every 10 minutes anyway? If you
+comment out this line, fetchmail won&#8217;t run in the background. That
+means, you have to invoke it everytime you want to check for new email</para>
+</callout>
+<callout arearefs="CO3-3">
+<para>We will check for <emphasis>pop.gmail.com</emphasis> for emails that we haven&#8217;t
+downloaded yet using the POP3 protocol</para>
+</callout>
+<callout arearefs="CO3-4">
+<para>substitute your actual GMail address with to
+<emphasis>youremail@gmail.com</emphasis></para>
+</callout>
+<callout arearefs="CO3-5">
+<para>Substitute your actual GMail account password
+to <emphasis>yourpassword</emphasis></para>
+</callout>
+<callout arearefs="CO3-6">
+<para><literal>is</literal> <emphasis role="strong">ted</emphasis> <literal>here</literal> means I am mapping the user named <literal>ted</literal> (in my
+Linux machine) to <literal>youremail@gmail.com there</literal>, who happens to be the
+remote user</para>
+</callout>
+<callout arearefs="CO3-7">
+<para><literal>options ssl keep</literal>. We&#8217;ll use SSL to encrypt our communications,
+and we telling Google not to delete the emails on the server even
+after we have downloaded it</para>
+</callout>
+<callout arearefs="CO3-8">
+<para>Finally, whatever emails we pull from the servers, we will pass
+them to <literal>procmail</literal> for filtering and further processing</para>
+</callout>
+</calloutlist>
+</section>
+<section xml:id="_procmail">
+<title>Procmail</title>
+<example>
+<title>Procmail configuration</title>
+<literallayout class="monospaced">CORRECTHOME=/home/yourname/mail/in <co xml:id="CO4-1"/>
+MAILDIR=$CORRECTHOME/ <co xml:id="CO4-2"/>
+PMDIR=/home/yourname/mail/procmail/info/in <co xml:id="CO4-3"/>
+LOGFILE=$PMDIR/log <co xml:id="CO4-4"/>
+VERBOSE=on <co xml:id="CO4-5"/>
+
+:0
+Mail/ <co xml:id="CO4-6"/></literallayout>
+</example>
+<calloutlist>
+<callout arearefs="CO4-1">
+<para>Path to where you would like the physical mail files to be stored.
+Substitute your actual username to <emphasis>yourname</emphasis>, if you&#8217;re not sure what
+that is, run <literal>whoami</literal></para>
+</callout>
+<callout arearefs="CO4-2">
+<para>Were just setting the the MAILDIR variable</para>
+</callout>
+<callout arearefs="CO4-3">
+<para>Were just creating a Procmail home folder and saving it to the
+PMDIR variable</para>
+</callout>
+<callout arearefs="CO4-4">
+<para>Set the log file</para>
+</callout>
+<callout arearefs="CO4-5">
+<para>Set this to on when you are testing, you can set this to off later
+on when things are properly configured already. This could be useful
+when debugging so you can see which systems are failing</para>
+</callout>
+<callout arearefs="CO4-6">
+<para>Pay attention to the slash at the end of the Mail, that is
+important</para>
+</callout>
+</calloutlist>
+</section>
+<section xml:id="_msmtp">
+<title>msmtp</title>
+<simpara>Msmtp is an smtp client. It will be the one responsible for sending
+out email messages. In order to use it, we first have to get it via
+<literal>sudo apt-get install -y msmtp</literal>.</simpara>
+<simpara>test it</simpara>
+<simpara>Now</simpara>
+<example>
+<title>Msmtp configuration</title>
+<literallayout class="monospaced">defaults
+auth on
+tls on
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+
+account Gmail
+host smtp.gmail.com
+port 587
+from yourusername@gmail.com
+user yourusername@gmail.com
+password yourpassword
+
+account default: Gmail</literallayout>
+</example>
+</section>
+<section xml:id="_mutt">
+<title>Mutt</title>
+<example>
+<title>Mutt configuration file</title>
+<literallayout class="monospaced">set realname = "Your RealName"
+set from="yourusername@gmail.com"
+set use_from=yes
+set envelope_from="yes"
+
+set sendmail="/usr/bin/msmtp"
+set spoolfile="/var/spool/mail/yourLinuxuserName"
+
+set folder="$HOME/Mail"
+set record="+Sent"
+set postponed="+Drafts"
+set mbox_type=Maildir
+set spoolfile=~/Mail
+set move=no
+
+
+mailboxes ! +slrn +fetchmail +mutt
+
+set editor="vim -c 'set tw=70 et' '+/^$'"
+set edit_headers=yes
+
+set alias_file=~/mail/mutt_aliases
+source ~/mail/mutt_aliases
+set sort_alias=alias
+set sort_aux=last-date-received
+set sort_browser=reverse-date
+set sort=threads
+set sort_re
+
+set timeout=30 # So it refreshes after 30 seconds</literallayout>
+</example>
+<simpara><emphasis role="strong">There are other ways to do this</emphasis></simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara>fetchmail + maildrop + mutt</simpara>
+</listitem>
+<listitem>
+<simpara>fetchmail + dovecot + mutt</simpara>
+</listitem>
+<listitem>
+<simpara>postfix + dovecot + procmail + mutt</simpara>
+</listitem>
+</orderedlist>
+</section>
+</chapter>
+<chapter xml:id="_references">
+<title>References</title>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><link xl:href="https://www.linode.com/docs/email/clients/using-fetchmail-to-retrieve-email">https://www.linode.com/docs/email/clients/using-fetchmail-to-retrieve-email</link></simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="https://www.df7cb.de/blog/2010.html">https://www.df7cb.de/blog/2010.html</link></simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="http://www.ioncannon.net/system-administration/97/using-fetchmail-and-procmail-for-maildir-style-storage-from-a-pop3-account/">http://www.ioncannon.net/system-administration/97/using-fetchmail-and-procmail-for-maildir-style-storage-from-a-pop3-account/</link></simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="https://www.axllent.org/docs/view/gmail-pop3-with-fetchmail/">https://www.axllent.org/docs/view/gmail-pop3-with-fetchmail/</link></simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="https://www.axllent.org/docs/view/gmail-pop3-with-fetchmail/">https://www.axllent.org/docs/view/gmail-pop3-with-fetchmail/</link></simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="http://www.andrews-corner.org/linux/mutt.html">http://www.andrews-corner.org/linux/mutt.html</link></simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="https://www.ucolick.org/~lharden/muttchart.html">https://www.ucolick.org/~lharden/muttchart.html</link>
+8.
+<link xl:href="https://hostpresto.com/community/tutorials/how-to-send-email-from-the-command-line-with-msmtp-and-mutt/">https://hostpresto.com/community/tutorials/how-to-send-email-from-the-command-line-with-msmtp-and-mutt/</link></simpara>
+</listitem>
+<listitem>
+<simpara><link xl:href="http://jasonwryan.com/blog/2012/05/12/mutt/">http://jasonwryan.com/blog/2012/05/12/mutt/</link></simpara>
+</listitem>
+</orderedlist>
 </chapter>
 </book>

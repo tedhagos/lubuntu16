@@ -9,18 +9,18 @@ the right installer for your platform. There are instructions on how
 to do the command line installation on that page, follow that.
 
 When the dropbox installer finishes downloading, install the .deb or
-whatever package you did download. Then start dropbox
+whatever package you did download. Then start dropbox with the command
+`sudo dropbox start -i`
 
-....
-dropbox start -i
-....
-
-As Ubuntu 16, Dropbox does not start automatically with the OS, so
+NOTE: As Ubuntu 16, Dropbox does not start automatically with the OS, so
 you have to start it manually every time you boot.
 
+.Start the Dropbox daemon manually
+====
 ....
 sudo dropbox start
 ....
+====
 
 === Google Drive
 

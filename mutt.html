@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>15.4. Mutt</title><link rel="stylesheet" type="text/css" href="stylesheet.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.79.1" /><link rel="home" href="index.html" title="Lubuntu Setup" /><link rel="up" href="email.html" title="Chapter 15. Email" /><link rel="prev" href="msmtp.html" title="15.3. msmtp" /><link rel="next" href="references.html" title="Chapter 16. References" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">15.4. Mutt</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="msmtp.html">Prev</a> </td><th width="60%" align="center">Chapter 15. Email</th><td width="20%" align="right"> <a accesskey="n" href="references.html">Next</a></td></tr></table><hr /></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="mutt"></a>15.4. Mutt</h2></div></div></div><div class="example"><a id="idm139707997259712"></a><p class="title"><strong>Example 15.8. Mutt configuration file</strong></p><div class="example-contents"><pre class="literallayout">set realname = "Your RealName"
+set from="yourusername@gmail.com"
+set use_from=yes
+set envelope_from="yes"
+
+set sendmail="/usr/bin/msmtp"
+set spoolfile="/var/spool/mail/yourLinuxuserName"
+
+set folder="$HOME/Mail"
+set record="+Sent"
+set postponed="+Drafts"
+set mbox_type=Maildir
+set spoolfile=~/Mail
+set move=no
+
+
+mailboxes ! +slrn +fetchmail +mutt
+
+set editor="vim -c 'set tw=70 et' '+/^$'"
+set edit_headers=yes
+
+set alias_file=~/mail/mutt_aliases
+source ~/mail/mutt_aliases
+set sort_alias=alias
+set sort_aux=last-date-received
+set sort_browser=reverse-date
+set sort=threads
+set sort_re
+
+set timeout=30 # So it refreshes after 30 seconds</pre></div></div><br class="example-break" /><p><span class="strong"><strong>There are other ways to do this</strong></span></p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">fetchmail + maildrop + mutt</li><li class="listitem">fetchmail + dovecot + mutt</li><li class="listitem">postfix + dovecot + procmail + mutt</li></ol></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="msmtp.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="email.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="references.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">15.3. msmtp </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Chapter 16. References</td></tr></table></div></body></html>

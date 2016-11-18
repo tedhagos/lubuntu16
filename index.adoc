@@ -187,15 +187,20 @@ include::chapters/cloud-storage.adoc[]
 
 == nvPY
 
-----
+nvPY is a note-taking application. It's a python-based equivalent of
+Notational Velocity (OSX). It was used by a lot of people to sync with
+SimpleNote, but it can be configured to read from a Dropbox directory
+(or any directory for that matter).
+
+....
 sudo apt-get install nvpy
-----
+....
 
 Create a config file for nvpy
 
-----
+....
 sudo touch ~/.nvpy.cfg
-----
+....
 
 Create the nvpy configuration file on your home folder
 
@@ -243,6 +248,10 @@ sudo apt-get install xsltproc docbook-xsl-ns docbook5-xml
 
 // Package Management
 include::chapters/package-manager.adoc[]
+
+
+// Email
+include::chapters/email.adoc[]
 
 
 
