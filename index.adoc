@@ -199,7 +199,7 @@ sudo apt-get install nvpy
 Create a config file for nvpy
 
 ....
-sudo touch ~/.nvpy.cfg
+touch ~/.nvpy.cfg
 ....
 
 Create the nvpy configuration file on your home folder

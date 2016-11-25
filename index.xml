@@ -4,7 +4,7 @@
 <book xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
 <info>
 <title>Lubuntu Setup</title>
-<date>2016-11-18</date>
+<date>2016-11-25</date>
 </info>
 <chapter xml:id="launcher">
 <title>Launcher</title>
@@ -220,7 +220,7 @@ SimpleNote, but it can be configured to read from a Dropbox directory
 (or any directory for that matter).</simpara>
 <literallayout class="monospaced">sudo apt-get install nvpy</literallayout>
 <simpara>Create a config file for nvpy</simpara>
-<literallayout class="monospaced">sudo touch ~/.nvpy.cfg</literallayout>
+<literallayout class="monospaced">touch ~/.nvpy.cfg</literallayout>
 <simpara>Create the nvpy configuration file on your home folder</simpara>
 <formalpara>
 <title>nvpy.cfg</title>
