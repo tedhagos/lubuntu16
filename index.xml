@@ -4,7 +4,7 @@
 <book xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
 <info>
 <title>Lubuntu Setup</title>
-<date>2016-11-25</date>
+<date>2016-12-01</date>
 </info>
 <chapter xml:id="launcher">
 <title>Launcher</title>
@@ -605,5 +605,48 @@ set timeout=30 # So it refreshes after 30 seconds</literallayout>
 <simpara><link xl:href="http://jasonwryan.com/blog/2012/05/12/mutt/">http://jasonwryan.com/blog/2012/05/12/mutt/</link></simpara>
 </listitem>
 </orderedlist>
+</chapter>
+<chapter xml:id="mount_macos_formatted_external_drive">
+<title>Mount macOS formatted external drive</title>
+<simpara>macOS has a weird behavior of writing files on an external drive with
+a user and group ID of '99'. When you insert these drives in Ubuntu,
+they will be read-only drives. And quite naturally, you cannot chown
+nor chmod it.</simpara>
+<simpara>You need to mount the drive in read-write mode first, then make
+changes on permissions and ownerships.</simpara>
+<simpara>Before you try the steps below, unmount the external drive first</simpara>
+<note>
+<simpara>These steps will work ONLY if the external drive is HFS
+formatted without journalling. You can do this in macOS with the
+command <literal>diskutil disableJournal /Volumes/nameOfVolume</literal>. The
+<emphasis>nameOfVolume</emphasis> is the partition of the disk where you would like to
+turn off journalling. You can view the volums in <emphasis role="strong">Finder</emphasis> or from the
+command line using <literal>diskutil list</literal></simpara>
+</note>
+<example>
+<title>Get HFS software</title>
+<literallayout class="monospaced">sudo apt-get install -y hfprogs hfsplus <co xml:id="CO5-1"/>
+mkdir ~/mymountpoint <co xml:id="CO5-2"/>
+sudo mount -t hfsplus -o force,rw /dev/sdXNo ~/mymountpoint <co xml:id="CO5-3"/></literallayout>
+</example>
+<calloutlist>
+<callout arearefs="CO5-1">
+<para>Get some software that will allow you to read HFS formatted disk</para>
+</callout>
+<callout arearefs="CO5-2">
+<para>Create the mount point manually, don&#8217;t rely on Ubuntu
+automagically mounting the disk</para>
+</callout>
+<callout arearefs="CO5-3">
+<para>Forcibly mount it in read-write mode, <literal>sdXNo</literal> is the partition of
+the external disk you would like to mount. You can view this partition
+using the GUI <emphasis>Disks</emphasis> <emphasis>Disks</emphasis> tool. This is usually on the
+<emphasis>Accessories</emphasis> menu. Or you could just run <literal>df</literal> from the command line
+to see all the mounted drives (and their partitions)</para>
+</callout>
+</calloutlist>
+<simpara>Might be best to make an alias of the third command in the listing
+above, so that you don&#8217;t have to type the whole command each time you
+mount the drive</simpara>
 </chapter>
 </book>

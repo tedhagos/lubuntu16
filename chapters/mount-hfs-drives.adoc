@@ -1,0 +1,46 @@
+== Mount macOS formatted external drive
+
+macOS has a weird behavior of writing files on an external drive with
+a user and group ID of '99'. When you insert these drives in Ubuntu,
+they will be read-only drives. And quite naturally, you cannot chown
+nor chmod it. 
+
+You need to mount the drive in read-write mode first, then make
+changes on permissions and ownerships.
+
+Before you try the steps below, unmount the external drive first
+
+NOTE: These steps will work ONLY if the external drive is HFS
+formatted without journalling. You can do this in macOS with the
+command `diskutil disableJournal /Volumes/nameOfVolume`. The
+_nameOfVolume_ is the partition of the disk where you would like to
+turn off journalling. You can view the volums in *Finder* or from the
+command line using `diskutil list`
+
+
+.Get HFS software
+====
+....
+sudo apt-get install -y hfprogs hfsplus # <1>
+mkdir ~/mymountpoint # <2>
+sudo mount -t hfsplus -o force,rw /dev/sdXNo ~/mymountpoint # <3>
+....
+====
+
+<1> Get some software that will allow you to read HFS formatted disk
+
+<2> Create the mount point manually, don't rely on Ubuntu
+automagically mounting the disk
+
+<3> Forcibly mount it in read-write mode, `sdXNo` is the partition of
+the external disk you would like to mount. You can view this partition
+using the GUI _Disks_ _Disks_ tool. This is usually on the
+_Accessories_ menu. Or you could just run `df` from the command line
+to see all the mounted drives (and their partitions) 
+
+Might be best to make an alias of the third command in the listing
+above, so that you don't have to type the whole command each time you
+mount the drive
+
+
+

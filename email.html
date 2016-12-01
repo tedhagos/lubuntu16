@@ -4,7 +4,7 @@ client access, not that it matters to Google which one we will use.
 Even if we use POP3, Google will keep the messages on the server
 anyway. But we will use POP3 on the client.</p><p>Before we proceed any further, you need to enable POP3 access in your
 Google account. You need to do the following</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">Login to your Google account</li><li class="listitem">Go to Settings</li><li class="listitem">Find the <span class="emphasis"><em>"Forwarding and POP/IMAP"</em></span></li><li class="listitem">Choose <span class="emphasis"><em>Enable POP for all mail</em></span></li><li class="listitem">Save the changes</li></ol></div><p>Now, we can proceed to setting up the client part. We need to get a
-couple of things.</p><div class="example"><a id="idm140124708156640"></a><p class="title"><strong>Example 15.1. Things we need</strong></p><div class="example-contents"><pre class="literallayout">sudo apt-get install fetchmail <a id="CO2-1"></a><span><img src="images/callouts/1.png" alt="1" border="0" /></span>
+couple of things.</p><div class="example"><a id="idm140120051829296"></a><p class="title"><strong>Example 15.1. Things we need</strong></p><div class="example-contents"><pre class="literallayout">sudo apt-get install fetchmail <a id="CO2-1"></a><span><img src="images/callouts/1.png" alt="1" border="0" /></span>
 sudo apt-get install procmail <a id="CO2-2"></a><span><img src="images/callouts/2.png" alt="2" border="0" /></span>
 sudo apt-get install msmtp <a id="CO2-3"></a><span><img src="images/callouts/3.png" alt="3" border="0" /></span>
 sudo apt-get install mutt <a id="CO2-4"></a><span><img src="images/callouts/4.png" alt="4" border="0" /></span>
@@ -13,14 +13,14 @@ than one account, but we’ll pull from just one for now</p></td></tr><tr><td wi
 folders if you so wish to organize them</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO2-3"><span><img src="images/callouts/3.png" alt="3" border="0" /></span></a> </p></td><td valign="top" align="left"><p>This allows us to compose email and send them using GMails SMTP</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO2-4"><span><img src="images/callouts/4.png" alt="4" border="0" /></span></a> </p></td><td valign="top" align="left"><p>This is an email client, this is the part we interact with. We
 could simply use the built-in <span class="strong"><strong>mail</strong></span> command that is present in most
 *NIX, but that is not user-friendly. There are other choices for email
-clients like PINE, but mutt is what I’m used to</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO2-5"><span><img src="images/callouts/5.png" alt="5" border="0" /></span></a> </p></td><td valign="top" align="left"><p>A text-based web browser</p></td></tr></table></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="fetchmail"></a>15.1. Fetchmail</h2></div></div></div><div class="example"><a id="idm140124708144256"></a><p class="title"><strong>Example 15.2. Checking if fetchmail has SSL support</strong></p><div class="example-contents"><pre class="screen">$ ldd `which fetchmail` | grep libssl
+clients like PINE, but mutt is what I’m used to</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO2-5"><span><img src="images/callouts/5.png" alt="5" border="0" /></span></a> </p></td><td valign="top" align="left"><p>A text-based web browser</p></td></tr></table></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="fetchmail"></a>15.1. Fetchmail</h2></div></div></div><div class="example"><a id="idm140120051816912"></a><p class="title"><strong>Example 15.2. Checking if fetchmail has SSL support</strong></p><div class="example-contents"><pre class="screen">$ ldd `which fetchmail` | grep libssl
     libssl.so.1.0.0 =&gt; /lib/x86_64-linux-gnu/libssl.so.1.0.0 (0x00007fbd7e706000)</pre></div></div><br class="example-break" /><p>You should see something like the one in line #2 of the listing
 above.</p><p>The next thing to check is we have the <span class="emphasis"><em>ca-certificates</em></span> installed on
 our system. This is necessary to pull mails from Google servers. Most
 modern Linux systems already have this installed.
 If it isn’t, you can always install it with the command <code class="literal">sudo apt-get install
 ca-certificates</code>. An easy way to check if you already have
-ca-certificates is to run the following command.</p><div class="example"><a id="idm140124708140784"></a><p class="title"><strong>Example 15.3. Check for ca-certificates</strong></p><div class="example-contents"><pre class="literallayout">$ dpkg -l | grep ca-certificates
+ca-certificates is to run the following command.</p><div class="example"><a id="idm140120051813440"></a><p class="title"><strong>Example 15.3. Check for ca-certificates</strong></p><div class="example-contents"><pre class="literallayout">$ dpkg -l | grep ca-certificates
 	ii ca-certificates
 	all Common CA certificates	2016010ubuntu
 	...  ...
@@ -28,7 +28,7 @@ ca-certificates is to run the following command.</p><div class="example"><a id="
 already have the ca-certificates. It should actually come with your
 installation. But if you don’t have it, just get it via <code class="literal">sudo apt-get
 install ca-certificates</code>.</p><p>Now we can check if our fetchmail and certificates can successfully
-talk to Google servers</p><div class="example"><a id="idm140124708137504"></a><p class="title"><strong>Example 15.4. Checking if fetchmail+certificates can talk to Google Servers</strong></p><div class="example-contents"><pre class="screen">$ openssl s_client -connect pop.gmail.com:995
+talk to Google servers</p><div class="example"><a id="idm140120051810160"></a><p class="title"><strong>Example 15.4. Checking if fetchmail+certificates can talk to Google Servers</strong></p><div class="example-contents"><pre class="screen">$ openssl s_client -connect pop.gmail.com:995
 ...  ...
 ...  ...
 ...  ...
@@ -37,7 +37,7 @@ only interested in the that last message that said "+OK Gpop ready..".
 That meant our certificates and fetchmail are working as expected. Now
 we can start configuring the fetchmailrc file. You will need to create
 it first with the command <code class="literal">touch ~/.fetchmailrc</code>. The listing below
-shows a basic fetchmailrc.</p><div class="example"><a id="idm140124708134448"></a><p class="title"><strong>Example 15.5. Fetchmail Configuration</strong></p><div class="example-contents"><pre class="screen">set postmaster 'ted' <a id="CO3-1"></a><span><img src="images/callouts/1.png" alt="1" border="0" /></span>
+shows a basic fetchmailrc.</p><div class="example"><a id="idm140120051807104"></a><p class="title"><strong>Example 15.5. Fetchmail Configuration</strong></p><div class="example-contents"><pre class="screen">set postmaster 'ted' <a id="CO3-1"></a><span><img src="images/callouts/1.png" alt="1" border="0" /></span>
 set daemon 600 <a id="CO3-2"></a><span><img src="images/callouts/2.png" alt="2" border="0" /></span>
 
 poll "pop.gmail.com" with proto POP3 <a id="CO3-3"></a><span><img src="images/callouts/3.png" alt="3" border="0" /></span>

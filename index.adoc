@@ -253,6 +253,9 @@ include::chapters/package-manager.adoc[]
 // Email
 include::chapters/email.adoc[]
 
+// Mounting external OSX formatted drives
+include::chapters/mount-hfs-drives.adoc[]
+
 
 
 
